@@ -104,3 +104,8 @@ DELETE FROM CabezeraPAux
 INSERT INTO catalogo.Cliente
 SELECT * FROM ClienteAux
 DELETE FROM ClienteAux
+
+-- ELIMINAR TABLAS AUXILIARES
+DROP TABLE ClienteAux
+DROP TABLE CabezeraPAux
+DROP TABLE DetallePAux
