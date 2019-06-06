@@ -1,8 +1,6 @@
-USE PedidosP
+USE Pedidos
 GO
-select * from catalogo.Cliente
-select * from movimiento.CabezeraP
-Select * from movimiento.DetalleP
+
 -- DESHABILITAR CONSTRAINTS DE CLIENTE, CABEZERAP Y DETALLEP
 ALTER TABLE catalogo.Cliente DROP CONSTRAINT pk_Cliente 
 ALTER TABLE movimiento.CabezeraP DROP CONSTRAINT pk_CabezeraP 
