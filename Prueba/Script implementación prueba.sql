@@ -17,3 +17,9 @@ UPDATE movimiento.CabezeraP
 SET codcli = SUBSTRING(codcli,1,1) + '000' + SUBSTRING(codcli,DATALENGTH(codcli)-1,2)
 GO
 
+-- MODIFICAR CAMPO CODPED DE CABEZERAP Y DETALLEP
+ALTER TABLE movimiento.CabezeraP
+ALTER COLUMN codped CHAR(10)
+
+ALTER TABLE movimiento.Detallep
+ALTER COLUMN codped CHAR(10)
