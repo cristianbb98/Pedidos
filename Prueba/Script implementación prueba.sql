@@ -1,42 +1,55 @@
 USE PedidosP
 GO
 
+SELECT * FROM catalogo.Cliente
+SELECT * FROM movimiento.CabezeraP
+SELECT * FROM movimiento.DetalleP
 -- DESHABILITAR CONSTRAINTS DE CLIENTE, CABEZERAP Y DETALLEP
 ALTER TABLE catalogo.Cliente DROP CONSTRAINT pk_Cliente 
 ALTER TABLE movimiento.CabezeraP DROP CONSTRAINT pk_CabezeraP 
 ALTER TABLE movimiento.DetalleP DROP CONSTRAINT pk_DetalleP
+ALTER TABLE catalogo.Cliente NOCHECK CONSTRAINT ALL
+ALTER TABLE movimiento.CabezeraP NOCHECK CONSTRAINT ALL
+ALTER TABLE movimiento.DetalleP NOCHECK CONSTRAINT ALL
 GO
 
 -- AUMENTAR EL TAMAÑO DEL CAMPO CODCLI DEL CLIENTE Y CABEZERAP
 ALTER TABLE catalogo.Cliente
-ALTER COLUMN codcli CHAR(6)
+ALTER COLUMN codcli CHAR(6) NOT NULL
 
-ALTER TABLE movimiento.CabeceraP
-ALTER COLUMN codcli CHAR(6)
+ALTER TABLE catalogo.Cliente
+ALTER COLUMN garante CHAR(6) NOT NULL
+
+ALTER TABLE movimiento.CabezeraP
+ALTER COLUMN codcli CHAR(6) NOT NULL
 GO
 
 -- ACTUALIZAR VALORES DEL CAMPO CODCLI DEL CLIENTE Y CABEZERAP
 UPDATE catalogo.Cliente
-SET codcli = SUBSTRING(codcli,1,1) + '000' + SUBSTRING(codcli,DATALENGTH(codcli)-1,2)
+SET codcli = 'C000' + SUBSTRING(trim(codcli),DATALENGTH(trim(codcli))-1,2)
+WHERE codcli = codcli
+
+UPDATE catalogo.Cliente
+SET garante = 'C000' + SUBSTRING(trim(garante),DATALENGTH(trim(garante))-1,2)
 
 UPDATE movimiento.CabezeraP
-SET codcli = SUBSTRING(codcli,1,1) + '000' + SUBSTRING(codcli,DATALENGTH(codcli)-1,2)
+SET codcli = 'C000' + SUBSTRING(trim(codcli),DATALENGTH(trim(codcli))-1,2)
 GO
 
 -- MODIFICAR TAMAÑO DEL CAMPO CODPED DE CABEZERAP Y DETALLEP
 ALTER TABLE movimiento.CabezeraP
-ALTER COLUMN codped CHAR(10)
+ALTER COLUMN codped CHAR(10) NOT NULL
 
 ALTER TABLE movimiento.DetalleP
-ALTER COLUMN codped CHAR(10)
+ALTER COLUMN codped CHAR(10) NOT NULL
 GO
 
 -- ACTUALIZAR VALORES DEL CAMPO CODPED DE CABEZERAP Y DETALLEP
 UPDATE movimiento.CabezeraP
-SET codped = 'PE000000' + SUBSTRING(codped,DATALENGTH(codped)-1,2)
+SET codped = 'PE000000' + SUBSTRING(TRIM(codped),DATALENGTH(TRIM(codped))-1,2)
 
 UPDATE movimiento.DetalleP
-SET codped = 'PE000000' + SUBSTRING(codped,DATALENGTH(codped)-1,2)
+SET codped = 'PE000000' + SUBSTRING(TRIM(codped),DATALENGTH(TRIM(codped))-1,2)
 GO
 
 -- HABILITAR CONSTRAINTS DE CLIENTE, CABEZERAP Y DETALLEP
