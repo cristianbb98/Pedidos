@@ -7,6 +7,13 @@ ALTER COLUMN codcli CHAR(6)
 
 ALTER TABLE movimiento.CabeceraP
 ALTER COLUMN codcli CHAR(6)
+GO
 
+-- ACTUALIZAR VALORES DEL CAMPO CODCLI DEL CLIENTE Y CABEZERAP
+UPDATE catalogo.Cliente
+SET codcli = SUBSTRING(codcli,1,1) + '000' + SUBSTRING(codcli,DATALENGTH(codcli)-1,2)
 
+UPDATE movimiento.CabezeraP
+SET codcli = SUBSTRING(codcli,1,1) + '000' + SUBSTRING(codcli,DATALENGTH(codcli)-1,2)
+GO
 
